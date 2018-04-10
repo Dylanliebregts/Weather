@@ -16,7 +16,6 @@ class page2: UIViewController {
         super.viewDidLoad()
 
         getWeather()
-        setTemp()
         
         // get the Sweater label to change on different temperature (in progress)
         
@@ -44,14 +43,14 @@ class page2: UIViewController {
                     print("All the weather data:\n\(dataString!)")
                     if let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary {
                         if let mainDictionary = jsonObj!.value(forKey: "main") as? NSDictionary {
-                            if let temperature = mainDictionary.value(forKey: "temp_min") {
+                            if let temperature = mainDictionary.value(forKey: "temp_min") as? Int {
                                 DispatchQueue.main.async {
                                     self.testLabel.text = "\(temperature)°C"
                                 }
-                                if temperature => 10{
+                                if temperature > 10{
                                     self.SweaterLabel.text = "Today is going to be very sunny. It would not hurt to wear sunglasses. Short clothes are recommended. Don't forget sunscreen."
                                 }
-                                if temperature =< 10{
+                                if temperature < 10{
                                     self.SweaterLabel.text = "Make sure you're dressed against the cold. Pick yourself a warm sweater. You might want to take gloves with you aswell"
                                 }
                             }
